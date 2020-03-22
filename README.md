@@ -36,7 +36,7 @@ gem install bundler
 
 ```bash
 git clone git@github.com:lifen-labs/covid.git && cd covid
-bundle exec install && yarn install
+bundle install && yarn install
 bundle exec rails db:setup
 ```
 
@@ -49,6 +49,7 @@ cp .env.example .env
 ##### Twilio
 
 We use Twilio's API to send SMS:
+
 - `TWILIO_ACCOUNT_ID` (required)
 - `TWILIO_AUTH_TOKEN` (required)
 - `TWILIO_PHONE_NUMBER` (required)
@@ -58,16 +59,24 @@ We use Twilio's API to send SMS:
 ##### Slack
 
 We use Slack to monitor failed SMS:
+
 - `SLACK_HOOK_URL` (optional)
 
+#### Run Redis on your local machine
+
+```
+docker run --name local-redis -d -p 6379:6379 redis
+```
+
 #### Starting a local server
+
+Note: You mey need to create a `pids` in tmp: `mkdir tmp/pids` to get Puma to work
 
 ```bash
 heroku local
 ```
 
 Then visit [http://localhost:5000/admin/](http://localhost:5000/admin/) with the seeds credentials: `admin@example.com` / `password`.
-
 
 #### Specs
 
@@ -92,12 +101,14 @@ The fastest way to deploy `covid` is using Heroku:
 ## Data structure
 
 Once signed in to the app via login/password, an `AdminUser` can:
+
 - manage a `CommandCenter` : the app can be deployed once and used in multiple locations (TODO: add an authorisation framework like Pundit to manage access levels)
 - onboard a `Patient`
 - manually create a `StandardSurvey`; otherwise, an automated process creates one every 24 hours.
 
 When a `StandardSurvey` is created, an SMS is sent with a secret temporary link. The `Patient` can then fill the form directly on his phone.
 Once the `StandardSurvey` is submitted, the app sets the operational status :
+
 - `green` : all good
 - `yellow` : default status, still all good
 - `orange` : a healthcare professional needs to check the survey results
@@ -113,7 +124,7 @@ Find details for contributing in the [contribution guide].
 
 ## Maintainers
 
-* Etienne Depaulis (https://github.com/EtienneDepaulis)
+- Etienne Depaulis (https://github.com/EtienneDepaulis)
 
 ## License
 
