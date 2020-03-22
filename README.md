@@ -70,7 +70,7 @@ docker run --name local-redis -d -p 6379:6379 redis
 
 #### Starting a local server
 
-Note: You mey need to create a `pids` in tmp: `mkdir tmp/pids` to get Puma to work
+Note: You may need to create a `pids` folder in tmp: `mkdir tmp/pids` to get Puma to work
 
 ```bash
 heroku local

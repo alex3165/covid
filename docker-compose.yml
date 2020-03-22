@@ -1,0 +1,47 @@
+version: "2"
+
+services:
+  postgres:
+    image: "postgres"
+    volumes:
+      - "postgres:/var/lib/postgresql/data"
+    env_file:
+      - ".env"
+
+  redis:
+    image: "redis"
+    command: redis-server
+    volumes:
+      - "redis:/data"
+
+  website:
+    depends_on:
+      - "postgres"
+      - "redis"
+    build: .
+    environment:
+      - TWILIO_ACCOUNT_ID
+      - TWILIO_AUTH_TOKEN
+      - TWILIO_PHONE_NUMBER
+      - SLACK_HOOK_URL
+    ports:
+      - "5000:5000"
+    volumes:
+      - ".:/app"
+    env_file:
+      - ".env"
+
+  sidekiq:
+    depends_on:
+      - "postgres"
+      - "redis"
+    build: .
+    command: sidekiq -C config/sidekiq.yml
+    volumes:
+      - ".:/app"
+    env_file:
+      - ".env"
+
+volumes:
+  redis:
+  postgres:
