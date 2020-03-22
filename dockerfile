@@ -5,13 +5,14 @@ WORKDIR /app/
 RUN ruby --version
 RUN node -v
 
-COPY . .
-
+COPY Gemfile* ./
 RUN bundle install
-RUN npm install
 
-RUN bundle exec rails db:setup
+COPY package.json ./
+RUN yarn
+
+ADD . .
 
 RUN gem install bundler
 
-CMD ["heroku", "local"]
+CMD bundle exec rails db:setup && rails s -b 0.0.0.0
