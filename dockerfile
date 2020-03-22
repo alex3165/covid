@@ -14,4 +14,4 @@ RUN bundle exec rails db:setup
 
 RUN gem install bundler
 
-CMD ["python3", "-u", "main.py"]
+CMD ["heroku", "local"]
