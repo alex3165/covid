@@ -63,5 +63,4 @@ Rails.application.configure do
   # Devise & external links
   config.action_mailer.default_url_options = { host: 'localhost', port: 5000 }
 
-  config.hosts << "5df1def7.ngrok.io"
 end
